@@ -1,0 +1,16 @@
+{
+  "name": "wipkip/chickentools",
+  "description": "Some easy to use PHP utilities.",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Ruben Seyferth",
+      "email": "ruben.seyferth@gmail.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "php": ">=5.3.0",
+    "ikimea/browser": "dev-master"
+  }
+}
