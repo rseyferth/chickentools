@@ -5,6 +5,21 @@
 	class Arry
 	{
 
+		// http://snippets.dzone.com/posts/show/4660
+		public static function flatten(array $array)
+		{
+			$i = 0;
+
+			while ($i < count($array))
+			{
+				if (is_array($array[$i]))
+					array_splice($array,$i,1,$array[$i]);
+				else
+					++$i;
+			}
+			return $array;
+		}
+
 		public static function mergeStatic($className, $propName, $recursiveMerge = true)
 		{
 
@@ -73,6 +88,36 @@
 			}
 	
 			return $aMerged;
+		}
+
+		/**
+		 * Somewhat naive way to determine if an array is a hash.
+		 */
+		public static function isHash(&$array)
+		{
+			if (!is_array($array))
+				return false;
+
+			$keys = array_keys($array);
+			return @is_string($keys[0]) ? true : false;
+		}
+
+		/**
+		 * Wrap string definitions (if any) into arrays.
+		 */
+		public static function wrapStringsInArrays(&$strings)
+		{
+			if (!is_array($strings))
+				$strings = array(array($strings));
+			else 
+			{
+				foreach ($strings as &$str)
+				{
+					if (!is_array($str))
+						$str = array($str);
+				}
+			}
+			return $strings;
 		}
 
 	}

@@ -205,32 +205,6 @@
 
 
 		/**
-		 * Encrypt password using Blowfish, with an optional salt added
-		 * @param  string  $password The password to encrypt
-		 * @param  string  $salt     A salt to add to the password
-		 * @param  integer $rounds   (default: 6) The number of rounds to process (Note that a high number will increase security, but also increase processor time)
-		 * @return string 	The encrypted/hashed password
-		 */
-		public static function blowFish($password, $salt = "", $rounds = 6)
-		{
-
-			// Encrypt!
-			$bcrypt = new \Bcrypt\Bcrypt('', $rounds);
-			return $bcrypt->hash($salt . $password);
-
-		}
-
-		public static function verifyPassword($plain, $hashed, $salt = '', $rounds = 6)
-		{
-			
-			// Do it!
-			$bcrypt = new \Bcrypt\Bcrypt($salt, $rounds);
-			return $bcrypt->verify($plain, $hashed);	
-
-		}
-
-
-		/**
 		 * Get the content extension for given filename
 		 * @param  string $filename The filename to check
 		 * @param  string $suffix   (default: '.php') Possible suffix, that is not to be treated as an extension
@@ -250,13 +224,53 @@
 		}
 
 
+		/**
+		 * Get the namespaces for the given className
+		 * @param  string   The qualified class name 
+		 * @return array 	Array of namespaces contained in the classname (the last element will be the classname itself)
+		 */
+		public static function getNamespaces($className)
+		{
+			// Are there any namespaces?
+			if (self::hasNamespace($className)) {
+				return explode('\\', $className);
+			} else {
+				return null;
+			}
 
+		}
+
+		/**
+		 * Check if given classname is qualified with a namespace.
+		 * @param  string  		The classname
+		 * @return boolean      True when a namespace is defined in the classname, otherwise false.
+		 */
+		public static function hasNamespace($className)
+		{
+			// Any \'s in there?
+			return (strpos($className, '\\') !== false);
+		}
+
+		/**
+		 * Check if given classname has an absolute namespace defined (meaning it starts with a backslash)
+		 * @param  string   The classname
+		 * @return boolean  True when classname starts with a backslash.
+		 */
+		public static function hasAbsoluteNamespace($className)
+		{
+			return $className[0] == '\\';
+		}
+
+		/**
+		 * Remove namespace qualification from given classname
+		 * @param  string  The classname
+		 * @return string            The classname without any namespaces.
+		 */
 		public static function removeNamespace($className) 
 		{
 			$index = strrpos($className, "\\");
 			if ($index == false) return $className;
 			return substr($className, $index + 1);
-
 		}
 
 	}
