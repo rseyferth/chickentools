@@ -11,7 +11,7 @@
   "minimum-stability": "dev",
   "require": {
     "php": ">=5.3.0",
-    "ikimea/browser": "dev-master"        
+    "ikimea/browser": "dev-master"
   },
   "autoload": {
     "psr-0": {"ChickenTools\\": "./"}

@@ -5,6 +5,40 @@
 	class Arry
 	{
 
+
+		public static function traverseKeys($array, $keys)
+		{
+
+			// Already an array?
+			if (is_string($keys)) {
+				$keys = explode(".", $keys);				
+			}
+
+			// First key exist?
+			if (array_key_exists($keys[0], $array)) {
+				
+				// Last key?
+				if (sizeof($keys) == 1) {
+
+					// We found it
+					return $array[$keys[0]];
+
+				} else {
+
+					// Look deeper
+					$key = $keys[0];
+					array_shift($keys);
+					return self::traverseKeys($array[$key], $keys);
+
+				}
+
+
+			} else {
+				return null;
+			}
+
+		}
+
 		// http://snippets.dzone.com/posts/show/4660
 		public static function flatten(array $array)
 		{
@@ -45,7 +79,7 @@
 
 		}
 
-		public static function Contains($needle, array $haystack, $caseSensitive = true)
+		public static function contains($needle, array $haystack, $caseSensitive = true)
 		{
 
 			// Case sensitive?
@@ -77,7 +111,7 @@
 					{
 						if (is_array($aArrays[$i][$key]))
 						{
-							$aMerged[$key] = is_array($aMerged[$key]) ? self::mergeRecursiveDistinct($aMerged[$key], $aArrays[$i][$key]) : $aArrays[$i][$key];
+							$aMerged[$key] = array_key_exists($key, $aMerged) && is_array($aMerged[$key]) ? self::mergeRecursiveDistinct($aMerged[$key], $aArrays[$i][$key]) : $aArrays[$i][$key];
 						}
 						else
 						{

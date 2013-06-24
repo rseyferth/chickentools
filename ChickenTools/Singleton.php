@@ -9,8 +9,6 @@
 	abstract class Singleton
 	{
 
-		protected static $_instance;
-
 		protected function __construct() {}
 
 		/**
