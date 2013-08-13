@@ -39,6 +39,23 @@
 
 		}
 
+
+		/**
+		 * Returns true if all values in $haystack === $needle
+		 * @param $needle
+		 * @param $haystack
+		 * @return unknown_type
+		 */
+		public static function all($needle, array $haystack)
+		{
+			foreach ($haystack as $value)
+			{
+				if ($value !== $needle)
+					return false;
+			}
+			return true;
+		}
+
 		// http://snippets.dzone.com/posts/show/4660
 		public static function flatten(array $array)
 		{

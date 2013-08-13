@@ -7,6 +7,7 @@
 
 		private static $plural = array(
 			'/(quiz)$/i'               => "$1zes",
+			'/(m)edia$/i'				=> "$1edia",
 			'/^(ox)$/i'                => "$1en",
 			'/([m|l])ouse$/i'          => "$1ice",
 			'/(matr|vert|ind)ix|ex$/i' => "$1ices",
@@ -30,6 +31,7 @@
 		private static $singular = array(
 			'/(quiz)zes$/i'             => "$1",
 			'/(matr)ices$/i'            => "$1ix",
+			'/(m)edia$/i'				=> "$1edia",
 			'/(vert|ind)ices$/i'        => "$1ex",
 			'/^(ox)en$/i'               => "$1",
 			'/(alias)es$/i'             => "$1",
@@ -79,9 +81,17 @@
 			'money',
 			'rice',
 			'information',
-			'equipment',
-			'media'
+			'equipment'
 		);
+
+		public static function classify($className, $singularize = false)
+		{
+			if ($singularize)
+		    $className = self::singularize($className);
+
+			$className = self::camelize($className);
+			return ucfirst($className);
+		}
 		
 		/**
 		 * Generate a random string
@@ -104,6 +114,36 @@
 			return $result;
 
 		}
+
+		/**
+		 * Turn a string into its camelized version.
+		 *
+		 * @param string $s string to convert
+		 * @return string
+		 */
+		public static function camelize($s)
+		{
+			$s = preg_replace('/[_-]+/','_',trim($s));
+			$s = str_replace(' ', '_', $s);
+
+			$camelized = '';
+
+			for ($i=0,$n=strlen($s); $i<$n; ++$i)
+			{
+				if ($s[$i] == '_' && $i+1 < $n)
+					$camelized .= strtoupper($s[++$i]);
+				else
+					$camelized .= $s[$i];
+			}
+
+			$camelized = trim($camelized,' _');
+
+			if (strlen($camelized) > 0)
+				$camelized[0] = strtolower($camelized[0]);
+
+			return $camelized;
+		}
+
 
 		/**
 		 * Convert string to URL-safe slug
