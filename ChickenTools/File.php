@@ -5,6 +5,20 @@
 	class File
 	{
 
+		public static function forDir($path, $regex, $callback)
+		{
+
+			$dh = opendir($path);
+			if ($dh === false) return;
+			while (false !== ($file = readdir($dh))) {
+				if (preg_match($regex, $file)) {
+					$callback($file);
+				}
+			}
+
+		}
+
+
 		public static function scanDir($path, $regex = null, $recursive = true, $includePath = false)
 		{
 
