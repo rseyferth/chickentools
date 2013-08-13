@@ -79,7 +79,8 @@
 			'money',
 			'rice',
 			'information',
-			'equipment'
+			'equipment',
+			'media'
 		);
 		
 		/**
