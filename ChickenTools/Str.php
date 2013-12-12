@@ -153,7 +153,7 @@
 		 */
 		public static function slugify($input, $spaceChar = '-') {
 
-			$str = strtolower(trim($input));
+			$str = strtolower(trim(self::unaccent($input)));
 			$str = preg_replace('/[^a-z0-9-]/', $spaceChar, $str);
 			$str = preg_replace('/-+/', "-", $str);
 			return $str;
